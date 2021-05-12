@@ -26,7 +26,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -40,7 +40,7 @@
 
 /* Private macro -------------------------------------------------------------*/
 /* USER CODE BEGIN PM */
-
+#define DEBUG_UART      huart1
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
@@ -58,7 +58,12 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+int __io_putchar(int ch)
+{
+    uint8_t byte = ch;
+    HAL_StatusTypeDef rv = HAL_UART_Transmit(&DEBUG_UART, &byte, 1, 1);
+    return rv == HAL_OK ? 1 : 0;
+}
 /* USER CODE END 0 */
 
 /**
@@ -92,7 +97,8 @@ int main(void)
   MX_I2C1_Init();
   MX_USART1_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  printf("WaveShare Open107V I2C demo\n");
+  printf("Hi!\n");
   /* USER CODE END 2 */
 
   /* Init scheduler */
