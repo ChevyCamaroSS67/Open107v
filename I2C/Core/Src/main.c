@@ -73,7 +73,7 @@ int __io_putchar(int ch)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+    HAL_StatusTypeDef rv;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -99,6 +99,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
   printf("WaveShare Open107V I2C demo\n");
   printf("Hi!\n");
+  uint8_t data[8] = {0};
+  rv = HAL_I2C_Master_Transmit_IT(&hi2c1, 0xA0, data, 1);
+  printf("rv = %d\n", rv);
   /* USER CODE END 2 */
 
   /* Init scheduler */
@@ -165,7 +168,10 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_I2C_MasterTxCpltCallback(I2C_HandleTypeDef *hi2c)
+{
+    printf("Done!\n");
+}
 /* USER CODE END 4 */
 
  /**
